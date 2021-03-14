@@ -34,8 +34,7 @@ import java.util.List;
  * to be swapped out. For example, the nearest-neighbor (NN) search can be done using a brute force approach, kd-tree,
  * or an approximate kd-tree.
  *
- * This approach to image recognition appears to have many parents with no single paper/author being the primary
- * inspiration. One of the early works is cited below.
+ * One of the more well known works to employ an approach similar to what is implemented here is cited below:
  * <p>
  *     <li>Sivic, Josef, and Andrew Zisserman. "Video Google: A text retrieval approach to object matching in videos."
  *     Computer Vision, IEEE International Conference on. Vol. 3. IEEE Computer Society, 2003.</li>
