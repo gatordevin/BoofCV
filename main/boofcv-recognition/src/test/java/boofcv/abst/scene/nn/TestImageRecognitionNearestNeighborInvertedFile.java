@@ -16,14 +16,18 @@
  * limitations under the License.
  */
 
-package boofcv.alg.scene.bownn;
+package boofcv.abst.scene.nn;
+
+import boofcv.testing.BoofStandardJUnit;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
- * Performs k-means clustering to learn the visual words
- *
- * @see RecognitionBagOfWordsNearestNeighbor
- *
  * @author Peter Abeles
  */
-public class LearnBagOfVisualWords {
+public class TestImageRecognitionNearestNeighborInvertedFile extends BoofStandardJUnit {
+	@Test void implement() {
+		fail("Implement");
+	}
 }

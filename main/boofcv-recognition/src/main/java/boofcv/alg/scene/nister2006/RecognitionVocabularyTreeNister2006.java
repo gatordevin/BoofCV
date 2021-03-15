@@ -57,7 +57,7 @@ public class RecognitionVocabularyTreeNister2006<Point> {
 	protected @Getter final BigDogArray_I32 imagesDB = new BigDogArray_I32(100, 10000, BigDogArray.Growth.GROW_FIRST);
 
 	/** Scores for all candidate images which have been sorted */
-	protected @Getter final DogArray<Match> matchScores = new DogArray<>(Match::new, Match::reset);
+	protected @Getter final DogArray<Match> matches = new DogArray<>(Match::new, Match::reset);
 
 	/** Distance between two TF-IDF descriptors. L1 and L2 norms are provided */
 	protected @Getter @Setter TupleMapDistanceNorm distanceFunction = new TupleMapDistanceNorm.L2();
@@ -121,14 +121,14 @@ public class RecognitionVocabularyTreeNister2006<Point> {
 
 	/**
 	 * Looks up the best match from the database. The list of all potential matches can be accessed by calling
-	 * {@link #getMatchScores()}.
+	 * {@link #getMatches()}.
 	 *
 	 * @param queryImage Set of feature descriptors from the query image
 	 * @param limit Maximum number of matches it will return.
 	 * @return The best matching image with score from the database
 	 */
 	public boolean query( List<Point> queryImage, int limit ) {
-		matchScores.reset();
+		matches.reset();
 
 		// Can't match to anything if it's empty
 		if (queryImage.isEmpty()) {
@@ -154,11 +154,11 @@ public class RecognitionVocabularyTreeNister2006<Point> {
 
 				Match m;
 				if (imageIdx_to_match.get(imageIdx) == -1) {
-					imageIdx_to_match.set(imageIdx, matchScores.size);
-					m = matchScores.grow();
+					imageIdx_to_match.set(imageIdx, matches.size);
+					m = matches.grow();
 					m.identification = imageIdx; // this will be converted to ID on output
 				} else {
-					m = matchScores.get(imageIdx_to_match.get(imageIdx));
+					m = matches.get(imageIdx_to_match.get(imageIdx));
 				}
 
 				// Update the score computation. See TupleMapDistanceNorm for why this is done
@@ -166,12 +166,12 @@ public class RecognitionVocabularyTreeNister2006<Point> {
 			}
 		}
 
-		if (matchScores.isEmpty())
+		if (matches.isEmpty())
 			return false;
 
 		// Compute the final scores
-		for (int i = 0; i < matchScores.size(); i++) {
-			Match m = matchScores.get(i);
+		for (int i = 0; i < matches.size(); i++) {
+			Match m = matches.get(i);
 			m.error = distanceFunction.distance(m.commonWords.toList());
 			// Undo changes and make sure all elements are -1 again
 			imageIdx_to_match.set(m.identification, -1);
@@ -181,8 +181,8 @@ public class RecognitionVocabularyTreeNister2006<Point> {
 
 		// NOTE: quick select then Collections.sort on the remaining entries is about 1.3x to 2x faster, but it's not
 		//       a bottle neck. Sort time for 8000 elements is about 2.5 ms
-		Collections.sort(matchScores.toList());
-		matchScores.size = Math.min(matchScores.size, limit);
+		Collections.sort(matches.toList());
+		matches.size = Math.min(matches.size, limit);
 
 		return true;
 	}
