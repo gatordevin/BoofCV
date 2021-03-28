@@ -190,4 +190,3 @@ public class FactorySceneReconstruction {
 		return similar;
 	}
 }
-
