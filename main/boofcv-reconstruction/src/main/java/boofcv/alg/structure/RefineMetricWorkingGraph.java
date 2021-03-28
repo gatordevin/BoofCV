@@ -304,7 +304,7 @@ public class RefineMetricWorkingGraph implements VerbosePrint {
 			}
 
 			// assign this feature to this observation
-			observations.getView(whichViewID).point.set(viewObsIdx, bestId);
+			observations.getView(whichViewID).safeAssignToFeature(viewObsIdx, bestId);
 			structure.connectPointToView(bestId, whichViewID);
 			// Remove it since it has been assigned. This is also why we iterate in reverse
 			unassigned.remove(unassignedIdx);

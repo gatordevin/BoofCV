@@ -115,6 +115,18 @@ public class SceneObservations {
 		}
 
 		/**
+		 * Assigns this observation to th specified feature. Does sanity checks to make sure
+		 * everything is consistent.
+		 */
+		public void safeAssignToFeature(int index, int featureIdx) {
+			if (point.contains(featureIdx))
+				throw new IllegalArgumentException("Feature has already been assigned to an observation");
+			if (-1 != point.get(index))
+				throw new IllegalArgumentException("Observation is already assigned a feature");
+			point.set(index, featureIdx);
+		}
+
+		/**
 		 * Sets the feature Id and observation for an observation
 		 *
 		 * @param index Which observation to set
