@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, Peter Abeles. All Rights Reserved.
+ * Copyright (c) 2021, Peter Abeles. All Rights Reserved.
  *
  * This file is part of BoofCV (http://boofcv.org).
  *
@@ -142,7 +142,7 @@ public interface PointCloudWriter {
 
 			@Override
 			public void add( double x, double y, double z, int rgb ) {
-				cloud.grow().set(x, y, z, rgb);
+				cloud.grow().setTo(x, y, z, rgb);
 			}
 		};
 	}
